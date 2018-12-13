@@ -1,0 +1,266 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <locale.h>
+
+#define max 25
+
+struct Visitante {
+	int id;
+	char nome[50];
+	char cpf[11];
+	char email[50];
+	char dataNasc[10];
+	char dataCadastro[10];
+	
+} vis[max];
+
+int indice = 0;
+ 
+void cabecalho();
+int menu(void);
+void inicia();
+void Cadastrar();
+void listarNomeCpf();
+void listarPorNomeParcial();
+void listarPorDataInformada();
+void listarPorCpf();
+void editarVisitante();
+
+int main (void){	
+	menu();
+	return 0;
+}
+
+
+void cabecalho (){
+	system ("cls");
+	
+	printf ("--------------------------------------------------------------------\n");
+	printf ("VISITANTES\n");
+	printf ("--------------------------------------------------------------------\n\n");	
+}
+
+int menu()	{
+	setlocale (LC_ALL,"Portuguese");	
+	int opcao;	
+	
+	inicia();
+	
+	do {
+		fflush (stdin);
+		cabecalho ();	
+		printf ("\n(1) Cadastrar\n");
+		printf ("\n(2) Listar por nome e cpf\n");
+		printf ("\n(3) Listar por nome parcial\n");
+		printf ("\n(4) Listar visitantes que fazem aniversário em uma data informada\n");
+		printf ("\n(5) Pesquisar e exibir detalhes do visitante cadastrado a partir do cpf\n");
+		printf ("\n(6) Editar\n");
+		printf ("\n(7) Sair\n");
+		printf ("\nEscolha uma opção: \n");
+		scanf ("%d",&opcao);
+
+		fflush (stdout);
+		
+		if (opcao == 1) {
+			Cadastrar();
+		}
+		
+		if (opcao == 2) {
+			listarNomeCpf();
+		}
+		
+		if (opcao == 3) {
+			listarPorNomeParcial();
+		}
+		
+		if (opcao == 4) {
+			listarPorDataInformada();
+		}
+		
+		if (opcao == 5) {
+			listarPorCpf();
+		}		
+		
+		if (opcao == 6) {
+			editarVisitante();
+		}
+		
+	} while (opcao != 7);
+		
+	return opcao;
+}
+
+void inicia (){
+	int i;	
+	for(i = 0; i < max; i++) vis[i].id = 0;		
+}
+		
+void Cadastrar(){		
+	if (indice == 24) {
+		printf ("Nao e possivel cadastrar mais participantes\n");
+	}
+	
+
+	printf ("Digite o ID:\n");
+	scanf ("%d", &vis[indice].id);
+	fflush (stdin);
+	
+	printf ("Digite o nome:\n");
+	scanf("%s",&vis[indice].nome); 
+	fflush (stdin);
+	
+	printf ("Digite o cpf:\n");
+	scanf("%s",&vis[indice].cpf);
+	fflush (stdin);
+	
+	printf ("Digite o email:\n");
+	scanf("%s",&vis[indice].email);
+	fflush (stdin);
+	
+	printf ("Digite a data de nascimento:\n");
+	scanf("%s",&vis[indice].dataNasc);
+	fflush (stdin);
+	
+	printf ("Digite a data de cadastro:\n");
+	scanf("%s",&vis[indice].dataCadastro);
+	fflush (stdin);
+	
+	indice++;
+	printf ("Cadastro realizado com sucesso!\n");	
+	system("pause");
+}	
+
+
+void listarNomeCpf(){	
+	int i;
+	
+	for (i = 0; i <= indice-1; i ++ ) {
+		printf ("\nId: %d", vis[i].id);
+		printf ("\nNome: %s", vis[i].nome);
+		printf ("\nCpf: %s\n", vis[i].cpf);		
+	}		
+	system("pause");	
+}
+
+void listarPorNomeParcial(){	
+	int i;
+	
+	char nome[50];
+	
+	printf ("Digite o nome:\n");
+	scanf("%s",&nome); 
+	fflush (stdin);
+	
+	char *ret;
+	
+	for (i = 0; i <= indice-1; i ++ ) {
+		if (strstr(vis[i].nome, nome))	{		
+			printf ("\nId: %d", vis[i].id);
+			printf ("\nNome: %s", vis[i].nome);
+			printf ("\nCpf: %s\n", vis[i].cpf);					
+		}
+
+	}		
+	system("pause");	
+}
+
+void listarPorDataInformada(){	
+	int i;
+	
+	char data[10];
+	
+	printf ("Digite a data de aniversario do visitante:\n");
+	scanf("%s",&data); 
+	fflush (stdin);
+	
+	char *ret;
+	
+	for (i = 0; i <= indice-1; i ++ ) {
+		if (strstr(vis[i].dataNasc, data))	{		
+			printf ("\nId: %d", vis[i].id);
+			printf ("\nNome: %s", vis[i].nome);
+			printf ("\nCpf: %s\n", vis[i].cpf);					
+		}
+
+	}		
+	system("pause");	
+}
+
+void listarPorCpf(){	
+	int i;
+	
+	char cpf[10];
+	
+	printf ("Digite o cpf do visitante:\n");
+	scanf("%s",&cpf); 
+	fflush (stdin);
+	
+	char *ret;
+	
+	for (i = 0; i <= indice-1; i ++ ) {
+		if (strstr(vis[i].cpf, cpf))	{		
+			printf ("\nId: %d", vis[i].id);
+			printf ("\nNome: %s", vis[i].nome);
+			printf ("\nCpf: %s", vis[i].cpf);		
+			printf ("\nEmail: %s", vis[i].email);					
+			printf ("\ndata de nascimento: %s", vis[i].dataNasc);					
+			printf ("\ndata de cadastro: %s\n", vis[i].dataCadastro);				
+		}
+
+	}		
+	system("pause");	
+}
+
+void editarVisitante(){	
+	int i;
+	
+	int id;
+	
+	printf ("Digite o ID do visitante:\n");
+	scanf("%D",&id); 
+	fflush (stdin);
+	
+	char *ret;
+	
+	for (i = 0; i <= indice-1; i ++ ) {
+		if (id == vis[i].id) {	
+			printf ("Dados do visitante:\n");
+			
+			printf ("\nId: %d", vis[i].id);
+			printf ("\nNome: %s", vis[i].nome);
+			printf ("\nCpf: %s", vis[i].cpf);		
+			printf ("\nEmail: %s", vis[i].email);					
+			printf ("\ndata de nascimento: %s", vis[i].dataNasc);					
+			printf ("\ndata de cadastro: %s\n", vis[i].dataCadastro);
+			
+			printf ("Digite as novas informacoes:\n");
+			printf ("Digite o nome:\n");
+			scanf("%s",&vis[i].nome); 
+			fflush (stdin);
+			
+			printf ("Digite o cpf:\n");
+			scanf("%s",&vis[i].cpf);
+			fflush (stdin);
+			
+			printf ("Digite o email:\n");
+			scanf("%s",&vis[i].email);
+			fflush (stdin);
+			
+			printf ("Digite a data de nascimento:\n");
+			scanf("%s",&vis[i].dataNasc);
+			fflush (stdin);
+			
+			printf ("Digite a data de cadastro:\n");
+			scanf("%s",&vis[i].dataCadastro);
+			fflush (stdin);
+			
+			printf ("Cadastro alterado com sucesso!\n");					
+		}
+
+	}		
+	system("pause");	
+}
+
+	
+	
