@@ -1,2 +1,2 @@
 # Linguagem_C
-Linguagem C
+Códigos feitos no DevC++
